@@ -1,13 +1,15 @@
 # Example of Terraform + Ansible deployment to AWS
 ### What this setup does
-* Creates a security group with ingress rules for 22/80/443 ports
-* Pops up two t2.micro instances and adds them to SG
-* Creates an inventory file for Ansible using Terraform output
+* Terraform:
+  * Creates a security group with ingress rules for 22/80/443 ports
+  * Pops up two t2.micro instances and adds them to SG
+  * Creates an inventory file for Ansible using Terraform output
 * Ansible:
   * Updates both instances
   * Installs Docker on `front`
+  * Generates a self-signed cert to be used by Nginx
   * Launches `nginx:alpine` container with config mapped
-  * Launches `jenkins` container
+  * Launches `jenkins` container which is an upstream to the Nginx
 
 ### Prereqs
 Python  
