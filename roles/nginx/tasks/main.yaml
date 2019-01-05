@@ -1,0 +1,30 @@
+- name: Copy Nginx config
+  become: yes
+  copy:
+    src: files/etc/nginx
+    dest: /etc
+    owner: ec2-user
+    group: ec2-user
+    mode: 0644
+
+
+- name: Generate self-signed cert
+  become: yes
+  command: openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/cert.key -out /etc/nginx/cert.crt -subj "/C=US/emailAddress=admin@example.com"
+
+
+- name: Run Nginx container
+  become: yes
+  docker_container:
+    name: nginx
+    image: nginx:alpine
+    state: started
+    restart_policy: always
+    links:
+      - jenkins
+    published_ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /etc/nginx:/etc/nginx
+      - /usr/share/nginx/html:/usr/share/nginx/html

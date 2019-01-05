@@ -1,0 +1,10 @@
+- name: Launch Jenkins container
+  become: yes
+  docker_container:
+    name: jenkins
+    image: jenkins/jenkins:lts-slim
+    published_ports:
+      - 8080:8080
+      - 5000:5000
+    state: started
+    restart_policy: always

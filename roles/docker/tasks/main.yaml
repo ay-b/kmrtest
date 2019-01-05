@@ -1,0 +1,14 @@
+- name: Install Docker
+  package:
+    name: docker
+    state: present
+
+- name: Configure Docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Pip install docker-py
+  become: yes
+  command: pip install docker-py
