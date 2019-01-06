@@ -46,12 +46,6 @@ resource "aws_instance" "front_instance" {
   tags = {
     Name = "front"
   }
-  
-  user_data = <<-EOF
-              #!/bin/bash
-              mkdir -p /usr/share/nginx/html/
-              echo "<h1>This is a PornHub storage server.<br> Nothing interesting here.</h1>" > /usr/share/nginx/html/index.html
-              EOF
 }
 
 resource "aws_instance" "back_instance" {
